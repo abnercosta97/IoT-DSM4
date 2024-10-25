@@ -1,35 +1,28 @@
+// C++ CODE
+//
 
-// Definição dos pinos
-int motorPin = 12;   // Pino digital que controla a base do transistor (através do botão)
-int botaoPin = 7;    // Pino do botão
-int estadoBotao = 0; // Variável para armazenar o estado do botão
+const int transistorPin = 2;
+const int botaoPin = A1;
 
 void setup()
 {
-    // Configurando o pino do motor (transistor base) como saída
-    pinMode(motorPin, OUTPUT);
-
-    // Configurando o pino do botão como entrada
-    pinMode(botaoPin, INPUT);
-
-    // Inicializando o monitor serial para depuração
     Serial.begin(9600);
+    pinMode(transistorPin, OUTPUT);
+    pinMode(botaoPin, INPUT);
 }
 
 void loop()
 {
-    // Lendo o estado do botão
-    estadoBotao = digitalRead(botaoPin);
+    int estadoBotao = digitalRead(botaoPin);
 
-    // Verifica se o botão foi pressionado
     if (estadoBotao == HIGH)
     {
-        Serial.println("Botão pressionado, motor ligado");
-        digitalWrite(motorPin, HIGH); // Aciona a base do transistor, ligando o motor
+        digitalWrite(transistorPin, HIGH);
+        Serial.println("Botão pressionado");
     }
     else
     {
-        Serial.println("Botão solto, motor desligado");
-        digitalWrite(motorPin, LOW); // Desativa a base do transistor, desligando o motor
+        digitalWrite(transistorPin, LOW);
+        Serial.println("Botão não pressionado");
     }
 }

@@ -1,22 +1,41 @@
-const int pirPin = 2;       // Pino digital ao qual o sensor PIR está conectado
-const int relayPin = 7;     // Pino digital ao qual o relé está conectado
+// C++ code
+//
+// Com Arduino UNO Montar:
+// • Alerta de Presença
+// • Gerar uma mensagem na serial e piscar LED se detectado presença
+// • Sensor PIR
 
-void setup() {
-  pinMode(pirPin, INPUT);    // Define o pino do PIR como entrada
-  pinMode(relayPin, OUTPUT); // Define o pino do relé como saída
-  Serial.begin(9600);        // Inicia a comunicação serial para monitoramento
+// Definindo as portas e constantes
+const int sensorPin = 2; // Porta onde o sensor PIR está conectado
+const int ledPin = 5;    // Porta onde o LED está conectado
+
+// Função para inicializar o código
+void setup()
+{
+  Serial.begin(9600);        // Inicia a comunicação serial
+  pinMode(sensorPin, INPUT); // Define a porta do sensor como entrada
+  pinMode(ledPin, OUTPUT);   // Define a porta do LED como saída
 }
 
-void loop() {
-  int pirState = digitalRead(pirPin); // Lê o valor do sensor PIR
-  
-  if (pirState == HIGH) {      // Se movimento for detectado
-    digitalWrite(relayPin, HIGH);  // Ativa o relé para acender a lâmpada
-    Serial.println("Presença detectada! Lâmpada acesa.");
-  } else {
-    digitalWrite(relayPin, LOW);   // Desativa o relé para apagar a lâmpada
-    Serial.println("Nenhuma presença detectada. Lâmpada apagada.");
+// Função para executar repetidamente
+void loop()
+{
+  // Leitura do valor digital do sensor PIR
+  int sensorValue = digitalRead(sensorPin);
+
+  // Verifica se o sensor detectou presença
+  if (sensorValue == HIGH)
+  {
+    // Imprime mensagem na serial
+    Serial.println("Presenca detectada!");
+
+    // Acende o LED
+    digitalWrite(ledPin, HIGH);
+
+    // Aguarda 1 segundo
+    delay(1000);
+
+    // Apaga o LED
+    digitalWrite(ledPin, LOW);
   }
-  
-  delay(500); // Atraso para evitar leituras erráticas do PIR
 }
